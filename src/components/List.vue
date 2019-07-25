@@ -1,9 +1,15 @@
 <template>
   <div>
     <a-table bordered :dataSource="this.items" :columns="columns" :rowKey="rowKey">
-      <template slot="name" slot-scope="text, record">
+      <span slot="tags" slot-scope="tags">
+        <a-tag v-for="tag in tags" color="blue" :key="tag">{{tag}}</a-tag>
+      </span>
+      <span slot="time" slot-scope="time">
+          <span>{{!time ? "" :new Date(time).toLocaleString() }}</span>
+        </span>
+      <!-- <template slot="name" slot-scope="text, record">
         <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)" />
-      </template>
+      </template>-->
       <template slot="operation" slot-scope="record">
         <a-button @click="receive(record)" v-if="record.status!=`已取件`">确认收货</a-button>
       </template>
@@ -38,7 +44,8 @@ export default {
         },
         {
           title: "预约时间",
-          dataIndex: "orderTime"
+          dataIndex: "orderTime",
+          scopedSlots: { customRender: "time" }
         },
         {
           scopedSlots: { customRender: "operation" }
@@ -56,7 +63,7 @@ export default {
       record.status = "已取件";
       this.$store.dispatch("updateItem", record);
     },
-    rowKey(record){
+    rowKey(record) {
       return record.id;
     }
   },

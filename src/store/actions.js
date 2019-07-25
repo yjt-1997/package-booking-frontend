@@ -5,16 +5,20 @@ const baseUrl = 'http://localhost:8088/items';
 
 export const actions = {
 
-  getItems({ commit }) {
-    axios.get(baseUrl).then(response => commit(mutationsType.RE_LOAD_ITEMS, response.data));
-  },
-  addItem(context, data) {
-    axios.post(baseUrl, data).then(() => this.dispatch('getItems'));
-  },
-  updateItem(context, data) {
-    axios.put(`${baseUrl}`, data).then(() => this.dispatch('getItems'));
-  },
-  deleteItem(context, data) {
-    axios.deleteItem(`${baseUrl}/${data.id}`, data).then(() => this.dispatch('getItems'));
-  }
+    getItems({ commit }) {
+        axios.get(baseUrl).then(response => commit(mutationsType.RE_LOAD_ITEMS, response.data));
+    },
+    addItem(context, data) {
+        axios.post(baseUrl, data).then(() => this.dispatch('getItems'));
+    },
+    updateItem(context, data) {
+        axios.put(baseUrl, data).then(() => this.dispatch('getItems'));
+    },
+    orderItem(context, data) {
+        console.log(data.id);
+        axios.put(`${baseUrl}/${data.id}`, data).then(() => this.dispatch('getItems'));
+    },
+    deleteItem(context, data) {
+        axios.deleteItem(`${baseUrl}/${data.id}`, data).then(() => this.dispatch('getItems'));
+    }
 }
