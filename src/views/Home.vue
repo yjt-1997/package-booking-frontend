@@ -1,18 +1,28 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <span style="font-size:30px;">菜鸟驿站</span>
+    <div style="float:right;">
+      <a-button @click="updateStatus('all')">All</a-button>
+      <a-button @click="updateStatus('已预约')">已预约</a-button>
+      <a-button @click="updateStatus('已取件')">已取件</a-button>
+      <a-button @click="updateStatus('未取件')">未取件</a-button>
+      <a-button @click="toAdd" style="border-radius:50%;">+添加</a-button>
+    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
+  name: "home",
+  components: {},
+  methods: {
+    toAdd() {
+      this.$router.push({ path: "/Add" });
+    },
+    updateStatus(newStatus) {
+      this.$store.commit("updateStatus", newStatus);
+    }
   }
-}
+};
 </script>
